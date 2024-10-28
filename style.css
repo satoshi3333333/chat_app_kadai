@@ -1,0 +1,68 @@
+.main{
+    background-color: #8cabd8;
+    height: 700px;
+    width: 700px;
+   overflow: auto;
+   
+   
+   
+   
+}
+
+.line{
+    float: left;
+}
+
+.timerOtherVer{
+    float: right;
+    
+}
+
+.main p {
+    position: relative; /* 擬似要素を使用するために相対位置を設定 */
+    background-color: #ffffff; /* 背景色を設定 */
+    padding: 5px; /* 内側の余白を設定 */
+    border-radius: 10px; /* 角を丸くする */
+    margin: 5px; /* 上下のマージンを設定 */
+    max-width: 60%; /* 吹き出しの最大幅を設定 */
+    word-wrap: break-word; /* 長い単語が切れるようにする */
+    margin-left: 30px; /* 吹き出し全体に左側に隙間を追加 */
+    padding-top: 0px;
+}
+
+.main p::after {
+    content: ''; /* 擬似要素にコンテンツを追加 */
+    position: absolute; /* 吹き出しの三角形を位置決めするために絶対位置を設定 */
+    top: 10px; /* 吹き出しの上側に位置するように設定 */
+    left: -15px; /* 吹き出しの左側に合わせる（外側に出すための調整） */
+    border-width: 10px; /* 三角形の大きさを設定 */
+    border-style: solid; /* 三角形の枠線スタイルを設定 */
+    border-color: transparent #f0f0f0 transparent transparent; /* 左向き三角形を作るために色を設定 */
+}
+
+/* #output{
+    background-color: antiquewhite;
+} */
+
+h1 {
+    display: flex; /* フレックスボックスで横並びにする */
+    align-items: center; /* 垂直方向の中央揃え */
+    /* background-color: #8cabd8; */
+}
+
+h1 img {
+    width: 70px; /* 画像の幅を設定 */
+    height: 70px; /* 画像の高さを設定 */
+    margin-right: 10px; /* テキストとの間隔を設定 */
+}
+
+.main img{
+    width: 50px;
+    border-radius: 50px;
+    
+}
+
+.StartImage img{
+    width: 500px;
+height: 400px;
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Firebase:v9:Chatアプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+</div class="line">
+<h1><img src="line-app-icon-2106_0d.png" alt="">シミュレーターくん</h1>
+<div class="hidari">
+    <div> 挨拶：<input type="text" id="uname"> </div>
+    <div>
+        <textarea id="text" cols="30" rows="10"></textarea>
+        <button id="send">送信</button>
+        <button id="send2">送信2</button>
+        <button id="remove">リムーブ</button>
+    </div>
+    <div id="output" style="height:1px; overflow:auto;"></div>
+</div>
+<div class="main"></div>
+<div>
+
+<!-- <div class="timerOtherVer">
+    <p id="message">あなたの文章は大丈夫ですか？</p>
+    状況によってメッセージ内容を変えたいから、id属性を定義 
+     <input type="button" value="はい、とっても！" onclick="disp()" />
+    <input type="button" value="だめっぽいです・・" onclick="dispYell()" /><br>
+    <div class="StartImage">
+      <img src="JSonesang.jpg" alt="声掛けお姉さん" />
+    </div>
+    <h2>JSおねえさん登場</h2> -->
+
+
+
+
+
+
+
+
+<!--/ コンテンツ表示画面 -->
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- JQuery -->
+
+<!--** 以下Firebase **-->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, push, set, onChildAdded, remove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: ,
+        authDomain: ,
+        projectId: ,
+        storageBucket: ,
+        messagingSenderId: ,
+        appId: 
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db, "caht");
+    const dbRef2 = ref(db, "caht2");
+
+    $("#send").on("click", function() {
+        const msg = {
+            uname: $("#uname").val(),
+            text: $("#text").val()
+        };
+        const id = push(dbRef);
+        set(id, msg);
+    });
+
+    $("#send2").on("click", function() {
+        const msg = {
+            uname: $("#uname").val(),
+            text: $("#text").val()
+        };
+        const id = push(dbRef2);
+        set(id, msg);
+    });
+
+    $("#remove").on("click", function() {
+        remove(dbRef);
+    });
+
+    onChildAdded(dbRef, function(data) {
+        const msg = data.val();
+        const h = `
+            <div class="main">
+                <img src="IMG_8872s.jpg" alt="">
+                <p>${msg.uname}<br>${msg.text}</p>
+            </div>
+        `;
+        $(".main").append(h); // #outputを.mainに変更
+    });
+
+    // エンターキー
+    // $("#text").on("keydown", function(e) {
+    //     if (e.keyCode == 13) {
+    //         const msg = {
+    //             uname: $("#uname").val(),
+    //             text: $("#text").val()
+    //         };
+    //         const id = push(dbRef);
+    //         set(id, msg);
+    //     }
+    // });
+
+
+
+    // 以下JSおねえさん
+    document.addEventListener("DOMContentLoaded", function () {
+      let isDisp = false;  // 表示状態を記録するフラグ
+      let repeat;  // タイマーのIDを保持
+
+      if (repeat) {
+        clearTimeout(repeat);
+      }
+
+      let pMessage = document.getElementById("message"); // pMessageをここで定義
+
+      // メッセージを表示する関数
+      window.disp = function () {  // グローバル関数として定義
+        if (isDisp) {
+          pMessage.innerHTML = "それは良かったです！";
+          isDisp = false;
+        } else {
+          pMessage.innerHTML = "<br>";
+          isDisp = true;
+        }
+        repeat = setTimeout(disp, 500);  // 関数をそのまま渡す
+      };
+
+      let yellMessage = "私ももっとがんばります〜";  // 表示する文字列
+      let yellIndex = 1;
+
+      // メッセージを段階的に表示する関数
+      window.dispYell = function () {  // グローバル関数として定義
+        if (repeat) {
+          clearTimeout(repeat);
+        }
+
+        let pMessage = document.getElementById('message');
+        pMessage.innerHTML = yellMessage.substring(0, yellIndex);
+        yellIndex++;
+
+        if (yellIndex > yellMessage.length) {
+          yellIndex = 1;
+        }
+
+        repeat = setTimeout(dispYell, 500);  // 関数をそのまま渡す
+      };
+    });
+
+
+
+     
+</script>
+
+</body>
+</html>
